@@ -1,7 +1,6 @@
 use std::fs::File;
 use std::io::prelude::*;
 
-// Animals recognized by the program
 #[derive(Debug, PartialEq)]
 enum Animal {
     Dog,
@@ -9,17 +8,14 @@ enum Animal {
     Jellyfish,
 }
 
-// Possible errors when reading file
 #[derive(Debug)]
 enum ReadFileError {
     CannotReadFile,
     WrongFileContents,
 }
 
-// Map text to animals. Unknown text is mapped to nothing
-// and empty text is mapped to an error.
 fn get_animal(text: &str) -> Option<Animal> {
-    match text.trim().to_lowercase().as_ref() {
+    match text.trim().to_ascii_lowercase().as_str() {
         "dog" => Some(Animal::Dog),
         "cat" => Some(Animal::Cat),
         "jellyfish" => Some(Animal::Jellyfish),
@@ -27,7 +23,6 @@ fn get_animal(text: &str) -> Option<Animal> {
     }
 }
 
-// Read a file to an owned string
 fn read_file(file_name: &str) -> Result<String, ReadFileError> {
     use ReadFileError::*;
     let mut file = File::open(file_name).map_err(|_| CannotReadFile)?;
@@ -56,9 +51,6 @@ fn main() -> Result<(), ReadFileError> {
     Ok(())
 }
 
-// Unit tests for get_animal function. It could also be possible to
-// unit test the read_file function, but that would require temporary
-// files and would be out of scope for this demonstration.
 #[test]
 fn test_get_animals() {
     assert_eq!(get_animal("dog"), Some(Animal::Dog));
