@@ -19,7 +19,7 @@ enum ReadFileError {
 // Map text to animals. Unknown text is mapped to nothing
 // and empty text is mapped to an error.
 fn get_animal(text: &str) -> Option<Animal> {
-    match text.to_lowercase().as_ref() {
+    match text.trim().to_lowercase().as_ref() {
         "dog" => Some(Animal::Dog),
         "cat" => Some(Animal::Cat),
         "jellyfish" => Some(Animal::Jellyfish),
